@@ -115,14 +115,14 @@ export default function ResumeOptimizer() {
                 </div>
 
                 {/* Results Side */}
-                <div className="relative min-h-[500px]">
+                <div className="relative min-h-[400px]">
                     <AnimatePresence mode="wait">
                         {!result && !isOptimizing && (
                             <motion.div
                                 key="empty"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 glass-card border-dashed"
+                                className="w-full flex flex-col items-center justify-center text-center p-8 glass-card border-dashed min-h-[400px]"
                             >
                                 <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mb-6">
                                     <Sparkles className="w-8 h-8 text-slate-600" />
@@ -139,13 +139,13 @@ export default function ResumeOptimizer() {
                                 key="loading"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="absolute inset-0 flex flex-col items-center justify-center space-y-6 glass-card"
+                                className="w-full flex flex-col items-center justify-center space-y-6 glass-card min-h-[400px]"
                             >
                                 <div className="relative">
                                     <div className="w-20 h-20 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
                                     <Sparkles className="absolute inset-0 m-auto w-8 h-8 text-primary animate-pulse" />
                                 </div>
-                                <div className="text-center">
+                                <div className="text-center px-4">
                                     <div className="text-lg font-bold text-white mb-1">Optimizing your future</div>
                                     <div className="text-sm text-slate-400 animate-pulse">Running ATS check | Identifying keywords | Rewriting bullets</div>
                                 </div>
@@ -157,7 +157,7 @@ export default function ResumeOptimizer() {
                                 key="results"
                                 initial={{ opacity: 0, x: 20 }}
                                 animate={{ opacity: 1, x: 0 }}
-                                className="space-y-6"
+                                className="space-y-6 w-full"
                             >
                                 <div className="glass-card p-6 border-primary/20 bg-primary/5">
                                     <div className="flex justify-between items-center mb-6">

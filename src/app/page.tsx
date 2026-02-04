@@ -1,10 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { Sparkles, FileText, Briefcase, Rocket, ChevronRight, CheckCircle2 } from "lucide-react";
+import { Sparkles, FileText, Briefcase, Rocket, ChevronRight, CheckCircle2, Menu, X } from "lucide-react";
 
 export default function Home() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -28,13 +30,39 @@ export default function Home() {
                     <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                         <Rocket className="text-white w-5 h-5" />
                     </div>
-                    <span className="font-outfit font-bold text-xl tracking-tight">Resumate</span>
+                    <span className="font-outfit font-bold text-xl tracking-tight text-white">Resumate</span>
                 </div>
+
+                {/* Desktop Nav */}
                 <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
                     <Link href="#features" className="hover:text-white transition-colors">Features</Link>
                     <Link href="#pricing" className="hover:text-white transition-colors">Pricing</Link>
                     <Link href="/dashboard" className="btn-primary py-2 px-5 text-sm">Get Started</Link>
                 </div>
+
+                {/* Mobile Tablet Toggle */}
+                <button
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    className="md:hidden p-2 text-slate-400 hover:text-white transition-colors"
+                >
+                    {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                </button>
+
+                {/* Mobile Menu Overlay */}
+                <AnimatePresence>
+                    {isMenuOpen && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            className="absolute top-full left-0 w-full bg-[#0a0a0c] border-b border-white/5 p-6 flex flex-col gap-6 md:hidden shadow-2xl"
+                        >
+                            <Link href="#features" onClick={() => setIsMenuOpen(false)} className="text-lg font-medium text-slate-400 hover:text-white">Features</Link>
+                            <Link href="#pricing" onClick={() => setIsMenuOpen(false)} className="text-lg font-medium text-slate-400 hover:text-white">Pricing</Link>
+                            <Link href="/dashboard" className="btn-primary py-3 px-5 text-center text-sm font-bold">Get Started Free</Link>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </nav>
 
             {/* Hero Section */}
