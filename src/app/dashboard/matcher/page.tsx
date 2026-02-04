@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Briefcase, Target, Zap, ChevronRight, FileSearch, Sparkles, Loader2, CheckCircle2 } from "lucide-react";
+import { matchJobDescription } from "@/actions/matcher";
 
 export default function JobMatcher() {
     const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -10,23 +11,17 @@ export default function JobMatcher() {
     const [jobDescription, setJobDescription] = useState("");
     const [result, setResult] = useState<any>(null);
 
-    const handleAnalyze = () => {
+    const handleAnalyze = async () => {
         setIsAnalyzing(true);
-        // Mock AI analysis for Matching
-        setTimeout(() => {
-            setResult({
-                score: 82,
-                matchLevel: "High Match",
-                highlights: [
-                    "Strong alignment with React and Next.js requirements.",
-                    "Experience with Stripe integration matches technical stack.",
-                    "Project leadership experience aligns with 'Senior' title expectations."
-                ],
-                missingSkills: ["Kubernetes", "Redis", "Unit Testing (Jest)"],
-                recommendation: "Highlight your recent migration to Next.js App Router in your summary to better align with their performance goals."
-            });
+        try {
+            const data = await matchJobDescription(jobDescription);
+            setResult(data);
+        } catch (error) {
+            console.error(error);
+            alert("Something went wrong during job matching.");
+        } finally {
             setIsAnalyzing(false);
-        }, 2500);
+        }
     };
 
     return (
